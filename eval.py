@@ -32,11 +32,11 @@ args_parser.add_argument('-test', action='store_true', default=False, help='trai
 args = args_parser.parse_args()
 
 if __name__ == '__main__':
-        checkpoint = 11
-        data_name = ['TacRED', 'SemEval', 'NYT']
-        data_test = ["./test.json", "./data/SemEval2010_task8/test.json", "./data/nyt/raw_nyt/test_entity.json"]
-        model_save = ['./data/TACRED/eval_sigmoid/', './data/SemEval2010_task8/eval/', './data/nyt/eval/']
+        checkpoint = 41
+        data_name = ['TacRED', 'NYT']
+        data_test = ["./test.json", "./data/nyt/test.json"]
+        model_save = ['./data/TACRED/eval_sigmoid/', './data/nyt/eval/']
         RE = GCNRE()
         RE_filename = model_save[args.dataset]
         RE.test(RE_filename=RE_filename, checkpoint = checkpoint, dataset=data_test[args.dataset], data_name = data_name[args.dataset],
-                threshold=0.5, batch_size = args.batch_size, args=args)
+                threshold=0.6, batch_size = args.batch_size, args=args)
