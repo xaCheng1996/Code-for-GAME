@@ -8,7 +8,11 @@ This is a release code for paper "Multi-Relation Extraction via A Global-Local G
 
 ## Data
 
-We will upload the data soon.
+train.json: [link_train](https://drive.google.com/file/d/1tBbYzdb72U29PTVoZhgrgIrDtDB5XV12/view?usp=sharing)
+
+test.json: [link_test](https://drive.google.com/file/d/1ZaQwWZ1QKc0bglrTBaL1xFIlpvmwfvcX/view?usp=sharing)
+
+Please place it in ./data/nyt/ and modify the parameters of train.py and eval.py.
 
 ## Quick Start
 
@@ -48,7 +52,7 @@ The dataset we use are NYT(public) and [TACRED](https://catalog.ldc.upenn.edu/LD
 
 If a sentence has multiple relations, it will appear multiple times.  This preprocessing method is mainly for the convenience of training, you can also customize the preprocessing (by modifying the file in /GCN_RE/utils). 
 
-Because TACRED is not a fully public dataset (access fee is required), we will not upload pre-processed TACRED dataset. While we will upload the pre-processing results of NYT soon.
+Because TACRED is not a fully public dataset (access fee is required), we will not upload pre-processed TACRED dataset. While we will upload the pre-processing results of NYT.
 
 ```
 Scripts for training and testing: 
