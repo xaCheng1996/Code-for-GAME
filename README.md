@@ -8,9 +8,9 @@ This is a release code for paper "Multi-Relation Extraction via A Global-Local G
 
 ## Data
 
-train.json: [link_train](https://drive.google.com/file/d/1tBbYzdb72U29PTVoZhgrgIrDtDB5XV12/view?usp=sharing)
+train.json: [link_train](https://drive.google.com/file/d/1ukDBUeTjAAwO4ccnSONe9tTRemGcLk0L/view?usp=share_link)
 
-test.json: [link_test](https://drive.google.com/file/d/1ZaQwWZ1QKc0bglrTBaL1xFIlpvmwfvcX/view?usp=sharing)
+test.json: [link_test](https://drive.google.com/file/d/1OEHnEuR0vvO-F_JSfjoaEJ2OZYezKaMC/view?usp=share_link)
 
 Please place it in ./data/nyt/ and modify the parameters of train.py and eval.py.
 
