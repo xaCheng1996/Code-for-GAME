@@ -14,7 +14,7 @@ args_parser.add_argument('-early-stop', type=int, default=1000, help='iteration 
 args_parser.add_argument('-save-best', type=bool, default=True, help='whether to save when get best performance')
 args_parser.add_argument('-maxlength', type=int, default=256, help='length of sentences which is padded')
 # data
-args_parser.add_argument('-dataset', type=int, default=2, help='the chose of dataset, 0 for TACRED, 1 for SemEval, 2 for NYT')
+args_parser.add_argument('-dataset', type=int, default=1, help='the chose of dataset, 0 for TACRED, 1 for NYT')
 args_parser.add_argument('-output_size', type=int, default=24, help='the chose of dataset, 42 for TACRED, 10 for SemEval, 24 for NYT')
 args_parser.add_argument('-shuffle', action='store_true', default=True, help='shuffle the data every epoch')
 # model
@@ -22,7 +22,7 @@ args_parser.add_argument('-dropout', type=float, default=0.5, help='the probabil
 args_parser.add_argument('-max-norm', type=float, default=3.0, help='l2 constraint of parameters [default: 3.0]')
 args_parser.add_argument('-embed-dim', type=int, default=300, help='number of embedding dimension [default: 300]')
 # device
-args_parser.add_argument('-device', type=int, default=-1, help='device to use for iterate data, -1 mean cpu [default: -1]')
+args_parser.add_argument('-device', type=int, default=2, help='device to use for iterate data, -1 mean cpu [default: -1]')
 args_parser.add_argument('-no-cuda', action='store_true', default=False, help='disable the gpu')
 # option
 args_parser.add_argument('-snapshot', type=str, default=None, help='filename of model snapshot [default: None]')
@@ -34,7 +34,7 @@ args = args_parser.parse_args()
 if __name__ == '__main__':
         checkpoint = 41
         data_name = ['TacRED', 'NYT']
-        data_test = ["./test.json", "./data/nyt/test.json"]
+        data_test = ["./test.json", "./data/nyt/raw_nyt/test.json"]
         model_save = ['./data/TACRED/eval_sigmoid/', './data/nyt/eval/']
         RE = GCNRE()
         RE_filename = model_save[args.dataset]
