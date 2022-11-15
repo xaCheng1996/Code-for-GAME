@@ -142,7 +142,7 @@ def get_relation_vector(relation, relation_class):
     return relation_vector
 
 
-def create_graph_from_sentence_and_word_vectors(words, word_vectors, subj_start, subj_end, obj_start, obj_end, edges, entity):
+def create_graph_from_sentence_and_word_vectors(words, word_vectors, subj_start, subj_end, obj_start, obj_end, edges):
     matrix_len = len(words)
     # print(words)
     # print(matrix_len)
@@ -160,10 +160,27 @@ def create_graph_from_sentence_and_word_vectors(words, word_vectors, subj_start,
             A_fw[word1][word2] = 1
             A_fw[word2][word1] = 1
 
-    for i in entity:
-        for j in entity:
-            A_bw[i][j] = 1
-            A_bw[j][i] = 1
+    for i in range(subj_start, subj_end + 1):
+        for j in range(subj_start, subj_end + 1):
+            A_bw[i][i] += 1
+            A_bw[i][j] += 1
+            A_bw[j][i] += 1
+            A_bw[j][j] += 1
+
+    for i in range(obj_start, obj_end+1):
+        for j in range(obj_start, obj_end + 1):
+            A_bw[i][i] += 1
+            A_bw[i][j] += 1
+            A_bw[j][i] += 1
+            A_bw[j][j] += 1
+
+    for i in range(subj_start, subj_end+1):
+        for j in range(obj_start, obj_end + 1):
+            A_bw[i][i] += 1
+            A_bw[i][j] += 1
+            A_bw[j][i] += 1
+            A_bw[j][j] += 1
+
 
     return A_fw, A_bw, word_vectors
 
@@ -227,7 +244,6 @@ def get_all_sentence(filename, data_name):
                 obj_end = line['obj_end']
                 relation = line['relation']
                 edges = line['edges']
-                entity = line['entity_mention']
 
 
                 # if relation_dic.get(relation) is None:
@@ -241,34 +257,11 @@ def get_all_sentence(filename, data_name):
                     cnt += 1
                     continue
                 sentences.append([sentence, subj_start, subj_end, obj_start, obj_end,
-                                  relation_vector, edges, entity])
+                                  relation_vector, edges])
                 # relation_pos_weight = get_weight(relation_dic, relation_TacRED)
             print('{} sentences has been abandoned cause the length > 256'.format(cnt))
             return sentences
 
-    if data_name == 'SemEval':
-        maxlength = 256
-        with open(filename, 'r', encoding='utf-8') as data_input:
-            sentences = []
-            lines = json.load(data_input)
-            for line in lines:
-                sentence = line['sentence']
-                subj_start = line['subj_start']
-                subj_end = line['subj_end']
-                obj_start = line['obj_start']
-                obj_end = line['obj_end']
-                relation = line['relation']
-                edges = line['edges']
-                entity = line['entity_mention']
-
-
-                relation_vector = get_relation_vector(relation, relation_Semeval)
-                # print(relation_vector)
-                sentence = list(sentence)
-
-                sentences.append([sentence, subj_start, subj_end, obj_start, obj_end,
-                                  relation_vector, edges, entity])
-                return sentences
     else:
         print("no dataset! ")
 
@@ -286,7 +279,6 @@ def get_data_from_sentences(sentences, maxlength):
         relation_vector = sentence[5]
         relation_vector = [np.array(relation_vector)]
         edges = sentence[6]
-        entity = sentence[7]
 
         # print(maxlength)
         for word in word_list:
@@ -305,7 +297,7 @@ def get_data_from_sentences(sentences, maxlength):
         # cnt += 1
 
         A_fw, A_bw, X = create_graph_from_sentence_and_word_vectors(word_list, word_vector, subj_start,
-                                                                              subj_end, obj_start, obj_end, edges,entity)
+                                                                              subj_end, obj_start, obj_end, edges)
         # print(A_fw.shape)
         all_data.append((A_fw, A_bw, X, relation_vector,subj_start,subj_end, obj_start, obj_end))
 
